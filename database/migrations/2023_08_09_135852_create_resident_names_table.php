@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resident_names', function (Blueprint $table) {
+        Schema::create('population_data', function (Blueprint $table) {
             $table->id();
             $table->string('nik', 191);
             $table->string('name', 191);
             $table->text('address');
             $table->string('phone_number', 20);
-            $table->string('village', 191);
             $table->string('district', 191);
-            $table->string('who_brought_it', 191);
+            $table->string('subdistrict', 191);
+            $table->string('person_responsible', 191);
             $table->text('information');
+            $table->string('photo_id', 191);
             $table->timestamps();
         });
     }
