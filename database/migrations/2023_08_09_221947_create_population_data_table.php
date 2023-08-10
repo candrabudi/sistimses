@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('population_data', function (Blueprint $table) {
             $table->id();
-            $table->string('nik', 191);
+            $table->string('nik', 191)->unique();
             $table->string('name', 191);
             $table->text('address');
             $table->string('phone_number', 20);
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('sub_district', 191);
             $table->string('person_responsible', 191);
             $table->text('information');
-            $table->string('photo_id', 191);
+            $table->string('photo_id', 191)->nullable();
             $table->timestamps();
         });
     }

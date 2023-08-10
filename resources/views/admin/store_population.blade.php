@@ -25,6 +25,7 @@
                     formData.append('person_responsible', $('#person_responsible').val());
                     formData.append('information', $('#information').val());
                     formData.append('address', $('#address').val());
+                    formData.append('gender', $('#gender').val());
                     formData.append('photo_id', $('#photo_id')[0].files[0]);
                     $.ajax({
                         url: '/store',
@@ -51,22 +52,31 @@
                             });
                         },
                         error: function(xhr, response) {
-                            $('#spiner-button').addClass('d-none');
-                            $('#submit-post').removeClass('d-none');
-                            if (xhr.responseJSON && xhr.responseJSON.code == 400) {
+                            if (xhr.responseJSON.code === 422) {
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: xhr.responseJSON.message,
+                                    text: 'Mohon Check Kembali Inputan Anda',
                                     icon: 'error',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
                                 });
-                            } else {
+                            }if(xhr.responseJSON.code === 400) {
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: 'Something Went Wrong!',
+                                    text: 'Maaf NIK Sudah Terpakai',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                });
+                            } 
+                            if(xhr.responseJSON.code === 500){
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Ada Kesalahan Internal!',
                                     icon: 'error',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'

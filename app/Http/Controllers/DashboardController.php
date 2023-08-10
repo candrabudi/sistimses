@@ -78,17 +78,34 @@ class DashboardController extends Controller
     {
         DB::beginTransaction();
         try {
-
+            if(!$request->nik 
+                || !$request->name 
+                || !$request->address 
+                || !$request->phone_number 
+                || !$request->district
+                || !$request->sub_district
+                || !$request->person_responsible
+                || !$request->information
+                || !$request->gender){
+                    return response()->json([
+                        'status' => 'failed', 
+                        'code' => 422, 
+                        'message' => 'Please Check Your Request!'
+                    ], 422);
+            }
+            $check_nik = PopulationData::where('nik', $request->nik)
+                ->first();
+            if($check_nik){
+                return response()->json([
+                    'status' => 'failed', 
+                    'code' => 400, 
+                    'message' => 'Duplicate Data NIK!'
+                ], 400);
+            }
             if ($request->hasFile('photo_id')) {
                 $image = $request->file('photo_id');
                 $imageName = 'photo_id/photo_id_' . time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('upload_images/photo_id'), $imageName);
-            } else {
-                return response()->json([
-                    'status'    => 'failed',
-                    'code'      => 400,
-                    'message'   => 'Error photo ID!',
-                ], 400);
             }
 
             $district_id = explode(',', $request->district);
@@ -105,13 +122,14 @@ class DashboardController extends Controller
             $store = new PopulationData();
             $store->nik = $request->nik;
             $store->name = $request->name;
+            $store->gender = $request->gender;
             $store->address = $request->address;
             $store->phone_number = $request->phone_number;
             $store->district = $district->district_name;
             $store->sub_district = $subdistrict->subdistrict_name;
             $store->person_responsible = $request->person_responsible;
             $store->information = $request->information;
-            $store->photo_id = $imageName;
+            $store->photo_id = $imageName ?? '';
             $store->save();
 
             DB::commit();

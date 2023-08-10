@@ -8,25 +8,33 @@
             <div class="col-sm-12">
                 <label class="form-label" for="nik">NIK</label>
                 <div class="input-group input-group-merge">
-                    <input type="text" id="nik" class="form-control dt-full-name" name="nik" placeholder="" aria-label="" aria-describedby="basicFullname2" required22/>
+                    <input type="number" id="nik" class="form-control dt-full-name" name="nik" placeholder="" aria-label="" aria-describedby="basicFullname2" required/>
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="name">NAMA</label>
                 <div class="input-group input-group-merge">
-                    <input type="text" id="name" name="name" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required22/>
+                    <input type="text" id="name" name="name" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required/>
                 </div>
             </div>
             <div class="col-sm-12">
-                <label class="form-label" for="phone_number">NO HP</label>
+                <label class="form-label" for="gender">JENIS KELAMIN</label>
+                <select class="form-select" id="gender" name="gender" required>
+                    <option value="">PILIH GENDER</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+            <div class="col-sm-12">
+                <label class="form-label" for="ephone_number">NO HP</label>
                 <div class="input-group input-group-merge">
-                    <input type="text" id="phone_number" name="phone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2"required22 />
+                    <input type="number" id="ephone_number" name="ephone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2"required />
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="district">KECAMATAN</label>
                 <div class="input-group input-group-merge">
-                    <select class="form-select" id="district" name="district" required22>
+                    <select class="form-select" id="district" name="district" required>
                         <option value="">PILIH KECAMATAN</option>
                         @foreach($districts as $d)
                         <option value="{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
@@ -37,7 +45,7 @@
             <div class="col-sm-12">
                 <label class="form-label" for="sub_district">DESA</label>
                 <div class="input-group input-group-merge">
-                    <select class="form-select" id="sub_district" name="sub_district" required22>
+                    <select class="form-select" id="sub_district" name="sub_district" required>
                         <option value="">PILIH DESA</option>
                     </select>
                 </div>
@@ -45,25 +53,25 @@
             <div class="col-sm-12">
                 <label class="form-label" for="address">ALAMAT</label>
                 <div class="input-group input-group-merge">
-                    <textarea name="address" class="form-control" id="address" cols="30" rows="3" required22></textarea>
+                    <textarea name="address" class="form-control" id="address" cols="30" rows="3" required></textarea>
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="basicEmail">PENANGGUNG JAWAB</label>
                 <div class="input-group input-group-merge">
-                    <input type="text" id="person_responsible" name="person_responsible" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="person_responsible"required22 />
+                    <input type="text" id="person_responsible" name="person_responsible" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="person_responsible"required />
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="information">KETERANGAN</label>
                 <div class="input-group input-group-merge">
-                    <textarea name="information" class="form-control" id="information" cols="30" rows="3" required22></textarea>
+                    <textarea name="information" class="form-control" id="information" cols="30" rows="3" required></textarea>
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="photo_id">FOTO KTP</label>
                 <div class="input-group input-group-merge">
-                    <input type="file" id="photo_id" name="photo_id" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="photo_id" required22/>
+                    <input type="file" id="photo_id" name="photo_id" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="photo_id"/>
                 </div>
             </div>
             <div class="col-sm-12">

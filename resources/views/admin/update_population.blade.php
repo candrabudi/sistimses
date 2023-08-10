@@ -13,6 +13,7 @@
             $('#e_information').val(data.population_data.information);
             $('select[name="e_district"]').append('<option value="' + data.population_data.data_district.district_id +  ',' + data.population_data.data_district.city_id +  '" selected>' + data.population_data.district + '</option>');
             $('select[name="e_sub_district"]').append('<option value="' + data.population_data.data_sub_district.id + '" selected>' + data.population_data.sub_district + '</option>');
+            $('select[name="e_gender"]').append('<option value="' + data.population_data.gender + '" selected>' + data.population_data.gender + '</option>');
             $('#edit-submit-data').click(function() {
                 Swal.fire({
                     title: 'Yakin?',
@@ -74,7 +75,8 @@
                                         },
                                         buttonsStyling: false
                                     });
-                                } else if (xhr.responseJSON.code == 404) {
+                                }
+                                if (xhr.responseJSON.code == 404) {
                                     Swal.fire({
                                         title: 'Error!',
                                         text: 'Maaf data tidak ditermukan!',
@@ -84,7 +86,8 @@
                                         },
                                         buttonsStyling: false
                                     });
-                                } else if (xhr.responseJSON.code == 500) {
+                                }
+                                if (xhr.responseJSON.code == 500) {
                                     Swal.fire({
                                         title: 'Error!',
                                         text: 'Maaf Ada Kesalahan Internal!',

@@ -11,6 +11,7 @@ class PopulationData extends Model
     protected $fillable = [
         'nik',
         'name',
+        'gender',
         'phone_number',
         'address',
         'district',
