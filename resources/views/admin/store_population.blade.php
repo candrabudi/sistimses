@@ -52,6 +52,17 @@
                             });
                         },
                         error: function(xhr, response) {
+                            if (xhr.responseJSON.code === 1001) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Mohon check tipe foto yang diupload',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                });
+                            }
                             if (xhr.responseJSON.code === 422) {
                                 Swal.fire({
                                     title: 'Error!',
@@ -62,7 +73,8 @@
                                     },
                                     buttonsStyling: false
                                 });
-                            }if(xhr.responseJSON.code === 400) {
+                            }
+                            if(xhr.responseJSON.code === 400) {
                                 Swal.fire({
                                     title: 'Error!',
                                     text: 'Maaf NIK Sudah Terpakai',

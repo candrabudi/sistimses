@@ -71,7 +71,7 @@
             <div class="col-sm-12">
                 <label class="form-label" for="e_photo_id">FOTO KTP</label>
                 <div class="input-group input-group-merge">
-                    <input type="file" id="e_photo_id" name="e_photo_id" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="e_photo_id"/>
+                    <input type="file" id="e_photo_id" name="e_photo_id" accept=".jpg, .jpeg, .png, .webp" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="e_photo_id"/>
                 </div>
             </div>
             <div class="col-sm-12">

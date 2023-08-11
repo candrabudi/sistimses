@@ -12,6 +12,7 @@ use DB;
 use DataTables;
 use App\Exports\PopulationDataExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Validator;
 class DashboardController extends Controller
 {
     public function index()
@@ -87,6 +88,17 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
+        $validator = Validator::make($request->all(), [
+            'photo_id' => 'image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'code' => 1001,
+                'message' => 'Please check your image upload.'
+            ], 422);
+        }
         try {
             if(!$request->nik 
                 || !$request->name 
@@ -179,6 +191,18 @@ class DashboardController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'e_photo_id' => 'image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'code' => 1001,
+                'message' => 'Please check your image upload.'
+            ], 422);
+        }
+
         $population_data = PopulationData::find($id);
         if (!$population_data) {
             return response()->json([
