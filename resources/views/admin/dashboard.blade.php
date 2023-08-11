@@ -31,7 +31,7 @@ List Data
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 mb-4 col-md-6">
+        <div class="col-xl-6 mb-4 col-md-6">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between flex-wrap gap-3 me-5">
@@ -51,6 +51,15 @@ List Data
                             <div class="content-right">
                                 <p class="mb-0">Perempuan</p>
                                 <h4 class="text-info mb-0">{{$chart_data[0]['woman']}}</h4>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="bg-label-danger p-2 rounded">
+                                <i class='ti ti-file ti-xl'></i>
+                            </span>
+                            <div class="content-right">
+                                <p class="mb-0">Total Inputan</p>
+                                <h4 class="text-info mb-0">{{$chart_data[0]['man'] + $chart_data[0]['woman']}}</h4>
                             </div>
                         </div>
                     </div>
