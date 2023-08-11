@@ -31,6 +31,32 @@ List Data
                 </div>
             </div>
         </div>
+        <div class="col-xl-4 mb-4 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between flex-wrap gap-3 me-5">
+                        <div class="d-flex align-items-center gap-3 me-4 me-sm-0">
+                            <span class="bg-label-info p-2 rounded">
+                                <i class='ti ti-man ti-xl'></i>
+                            </span>
+                            <div class="content-right">
+                                <p class="mb-0">Laki-Laki</p>
+                                <h4 class="text-primary mb-0">{{$chart_data[0]['man']}}</h4>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="bg-label-danger p-2 rounded">
+                                <i class='ti ti-woman ti-xl'></i>
+                            </span>
+                            <div class="content-right">
+                                <p class="mb-0">Perempuan</p>
+                                <h4 class="text-info mb-0">{{$chart_data[0]['woman']}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card">
         <div class="card-header p-3 d-flex mb-4">
@@ -70,14 +96,14 @@ List Data
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var maleCount = {{$chart_data[0]['man'] }};
+    var maleCount = {{$chart_data[0]['man']}};
     var femaleCount = {{$chart_data[0]['woman']}};
 
     var ctx = document.getElementById('genderChart').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Male', 'Female'],
+            labels: ['Laki-laki', 'Perempuan'],
             datasets: [{
                 data: [maleCount, femaleCount],
                 backgroundColor: ['#3498db', '#ff7979'], // Set colors for Male and Female segments
