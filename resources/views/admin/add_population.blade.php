@@ -8,13 +8,13 @@
             <div class="col-sm-12">
                 <label class="form-label" for="nik">NIK</label>
                 <div class="input-group input-group-merge">
-                    <input type="number" id="nik" class="form-control dt-full-name" name="nik" placeholder="" aria-label="" aria-describedby="basicFullname2" required/>
+                    <input type="number" id="nik" class="form-control dt-full-name" name="nik" placeholder="" aria-label="" aria-describedby="basicFullname2" required />
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="name">NAMA</label>
                 <div class="input-group input-group-merge">
-                    <input type="text" id="name" name="name" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required/>
+                    <input type="text" id="name" name="name" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required />
                 </div>
             </div>
             <div class="col-sm-12">
@@ -28,26 +28,31 @@
             <div class="col-sm-12">
                 <label class="form-label" for="ephone_number">NO HP</label>
                 <div class="input-group input-group-merge">
-                    <input type="number" id="ephone_number" name="ephone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2"required />
+                    <input type="number" id="ephone_number" name="ephone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required />
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="district">KECAMATAN</label>
-                <div class="input-group input-group-merge">
-                    <select class="form-select" id="district" name="district" required>
-                        <option value="">PILIH KECAMATAN</option>
-                        @foreach($districts as $d)
-                        <option value="{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
-                        @endforeach
-                    </select>
+                <div class="input-group">
+                    <div class="col-12">
+                        <select id="district" name="district" class="select2 form-select form-select-lg" data-allow-clear="false">
+                            @foreach($districts as $d)
+                            <option value="{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="sub_district">DESA</label>
                 <div class="input-group input-group-merge">
-                    <select class="form-select" id="sub_district" name="sub_district" required>
-                        <option value="">PILIH DESA</option>
-                    </select>
+                    <div class="col-12">
+                        <select id="sub_district" name="sub_district" class="select2 form-select form-select-lg" data-allow-clear="false">
+                            @foreach($districts as $d)
+                            <option value="{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-12">
@@ -59,7 +64,7 @@
             <div class="col-sm-12">
                 <label class="form-label" for="basicEmail">PENANGGUNG JAWAB</label>
                 <div class="input-group input-group-merge">
-                    <input type="text" id="person_responsible" name="person_responsible" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="person_responsible"required />
+                    <input type="text" id="person_responsible" name="person_responsible" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="person_responsible" required />
                 </div>
             </div>
             <div class="col-sm-12">
@@ -71,7 +76,7 @@
             <div class="col-sm-12">
                 <label class="form-label" for="photo_id">FOTO KTP</label>
                 <div class="input-group input-group-merge">
-                    <input type="file" id="photo_id" name="photo_id" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="photo_id"/>
+                    <input type="file" id="photo_id" name="photo_id" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="photo_id" />
                 </div>
             </div>
             <div class="col-sm-12">

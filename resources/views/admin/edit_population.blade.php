@@ -33,8 +33,8 @@
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="e_district">KECAMATAN</label>
-                <div class="input-group input-group-merge">
-                    <select class="form-select" id="e_district" name="e_district" required>
+                <div class="col-lg-12">
+                    <select class="select2 form-select form-select-lg" data-allow-clear="false" id="e_district" name="e_district" required>
                         <option value="">PILIH KECAMATAN</option>
                         @foreach($districts as $d)
                         <option value="{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
@@ -44,8 +44,8 @@
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="e_sub_district">DESA</label>
-                <div class="input-group input-group-merge">
-                    <select class="form-select" id="e_sub_district" name="e_sub_district" required>
+                <div class="col-lg-12">
+                    <select id="e_sub_district" name="e_sub_district" class="select2 form-select form-select-lg" data-allow-clear="false" required>
                         <option value="">PILIH DESA</option>
                     </select>
                 </div>

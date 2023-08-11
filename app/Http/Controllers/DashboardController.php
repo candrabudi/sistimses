@@ -23,7 +23,8 @@ class DashboardController extends Controller
         }
         $role = $check->role;
         $districts = District::select('id', 'city_id', 'district_id', 'district_name as name')
-            ->whereIn('districts.id', [2975, 2972])
+            ->where('city_id', 17)
+            ->where('province_id', 33)
             ->get();
         return view('admin.dashboard', compact('districts', 'role'));
     }

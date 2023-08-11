@@ -23,7 +23,7 @@ List Data
                     <th>NO HP</th>
                     <th>DESA</th>
                     <th>KECAMATAN</th>
-                    <th width="200">Aksi</th>
+                    <th width="250">Aksi</th>
                 </tr>
             </thead>
         </table>
@@ -31,6 +31,7 @@ List Data
 </div>
 @include('admin.add_population')
 @include('admin.edit_population')
+@include('admin.detail_population')
 @endsection
 @section('scripts')
 @include('admin.datatable')
@@ -38,4 +39,5 @@ List Data
 @include('admin.store_population')
 @include('admin.update_population')
 @include('admin.delete_population')
+@include('admin.detail_js')
 @endsection

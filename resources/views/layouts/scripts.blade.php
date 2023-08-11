@@ -20,8 +20,10 @@
 <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
 <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
 
 <script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="{{ asset('assets/js/forms-selects.js') }}"></script>
 
 @yield('scripts')
 

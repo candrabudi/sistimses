@@ -1,5 +1,4 @@
 <script>
-    console.log("kodok");
     $('#get-population').on('click', '.edit-population-data', function() {
         var id = $(this).data('id');
         $.get("/edit/" + id, function(data) {
