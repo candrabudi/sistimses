@@ -3,7 +3,6 @@
         $("#district").change(function() {
 
             var stateID = $(this).val();
-            console.log("stateID");
             if (stateID) {
                 $.ajax({
                     url: "/sub-district",

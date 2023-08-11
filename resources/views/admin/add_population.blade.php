@@ -26,9 +26,9 @@
                 </select>
             </div>
             <div class="col-sm-12">
-                <label class="form-label" for="ephone_number">NO HP</label>
+                <label class="form-label" for="phone_number">NO HP</label>
                 <div class="input-group input-group-merge">
-                    <input type="number" id="ephone_number" name="ephone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required />
+                    <input type="number" id="phone_number" name="phone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required />
                 </div>
             </div>
             <div class="col-sm-12">
@@ -36,8 +36,9 @@
                 <div class="input-group">
                     <div class="col-12">
                         <select id="district" name="district" class="select2 form-select form-select-lg" data-allow-clear="false">
+                            <option value="">PILIH KECAMATAN</option>
                             @foreach($districts as $d)
-                            <option value="{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
+                            <option value="{{$d->province_id}},{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -48,9 +49,7 @@
                 <div class="input-group input-group-merge">
                     <div class="col-12">
                         <select id="sub_district" name="sub_district" class="select2 form-select form-select-lg" data-allow-clear="false">
-                            @foreach($districts as $d)
-                            <option value="{{$d->district_id}},{{$d->city_id}}">{{$d->name}}</option>
-                            @endforeach
+                            <option value="">Belum Ada Desa</option>
                         </select>
                     </div>
                 </div>

@@ -11,9 +11,7 @@
 
                     @include('layouts.aside')
 
-                    <div class="container-xxl flex-grow-1 container-p-y">
                         @yield('content')
-                    </div>
                     @include('layouts.footer')
                     <div class="content-backdrop fade"></div>
                 </div>

@@ -12,7 +12,6 @@ use DB;
 use DataTables;
 use App\Exports\PopulationDataExport;
 use Maatwebsite\Excel\Facades\Excel;
-
 class DashboardController extends Controller
 {
     public function index()
@@ -22,11 +21,15 @@ class DashboardController extends Controller
             return redirect()->route('login');
         }
         $role = $check->role;
-        $districts = District::select('id', 'city_id', 'district_id', 'district_name as name')
+        $districts = District::select('id', 'province_id', 'city_id', 'district_id', 'district_name as name')
             ->where('city_id', 17)
             ->where('province_id', 33)
             ->get();
-        return view('admin.dashboard', compact('districts', 'role'));
+        $chart_data = PopulationData::select(DB::raw("SUM(CASE WHEN gender = 'Laki-laki' THEN 1 ELSE 0 END) AS man,
+        SUM(CASE WHEN gender != 'Laki-laki' THEN 1 ELSE 0 END) AS woman"))
+            ->get()
+            ->toArray();
+        return view('admin.dashboard', compact('districts', 'role', 'chart_data'));
     }
 
     public function datatable()
@@ -42,9 +45,13 @@ class DashboardController extends Controller
                 'id' => $new['id'],
                 'nik' => $new['nik'],
                 'name' => $new['name'],
+                'gender' => $new['gender'],
                 'phone_number' => $new['phone_number'],
                 'district' => $new['district'],
                 'sub_district' => $new['sub_district'],
+                'address' => $new['address'],
+                'person_responsible' => $new['person_responsible'],
+                'information' => $new['information'],
             ];
         }, $fetch);
 
@@ -64,10 +71,12 @@ class DashboardController extends Controller
         try {
 
             $district_city_id = explode(',', $request->district_city_id);
-            $district_id = $district_city_id[0];
-            $city_id = $district_city_id[1];
+            $province_id = $district_city_id[0];
+            $district_id = $district_city_id[1];
+            $city_id = $district_city_id[2];
             $subdistrict = SubDistrict::where('district_id', $district_id)
                 ->where('city_id', $city_id)
+                ->where('province_id', $province_id)
                 ->get();
             return $subdistrict;
         } catch (\Exception $e) {
@@ -110,16 +119,15 @@ class DashboardController extends Controller
             }
 
             $district_id = explode(',', $request->district);
-            $district = District::where('district_id', $district_id[0])
-                ->where('city_id', $district_id['1'])
-                ->whereIn('districts.id', [2975, 2972])
+            $district = District::where('district_id', $district_id[1])
+                ->where('city_id', $district_id['2'])
+                ->where('province_id', $district_id[0])
                 ->select('district_name')
                 ->first();
 
             $subdistrict = SubDistrict::where('id', $request->sub_district)
                 ->select('subdistrict_name')
                 ->first();
-
             $store = new PopulationData();
             $store->nik = $request->nik;
             $store->name = $request->name;
@@ -155,11 +163,13 @@ class DashboardController extends Controller
         $population_data = PopulationData::where('id', $id)
             ->first();
         $district = District::where('district_name', $population_data->district)
-            ->whereIn('districts.id', [2975, 2972])
+            ->where('city_id', 17)
+            ->where('province_id', 33)
             ->first();
         $sub_district = SubDistrict::where('subdistrict_name', $population_data->sub_district)
             ->where('city_id', $district->city_id)
             ->where('district_id', $district->district_id)
+            ->where('province_id', $district->province_id)
             ->first();
         $datas['population_data'] = $population_data;
         $datas['population_data']['data_district'] = $district;

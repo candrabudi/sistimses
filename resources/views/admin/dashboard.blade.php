@@ -2,31 +2,65 @@
 @section('title')
 List Data
 @endsection
+<style>
+    .container-xxxl {
+        width: 90%;
+        margin: auto;
+    }
+
+    #get-population th {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    #get-population td {
+        font-size: 14px;
+    }
+</style>
 @section('content')
-<div class="card">
-    <div class="card-header p-3 d-flex mb-4">
-        <h5 class="align-self-center m-0">List Data Penduduk</h5>
-        
-        <button class="create-new btn btn-primary btn-m ms-auto btn-toggle-sidebar" data-bs-toggle="offcanvas" data-bs-target="#add-resident-name"" aria-controls="add-resident-name">
-            <i class="ti ti-plus me-1"></i>
-            <span class="align-middle">&NonBreakingSpace;Tambah Penduduk</span>
-        </button>
-        <a href="{{route('exportToExcel')}}" class="btn btn-success btn-m ms-2" download><i class="ti ti-download" style="font-size: 16px;"></i>&NonBreakingSpace;Export</a>
+<div class="container-xxxl flex-grow-1 container-p-y">
+    <div class="row gy-3">
+        <div class="col-xl-2 mb-4 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div style="width: 100%; margin: auto;">
+                            <canvas id="genderChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-datatable table-responsive pt-0">
-        <table class="datatables-basic table" id="get-population">
-            <thead>
-                <tr>
-                    <th width="50">NO</th>
-                    <th>NIK</th>
-                    <th>NAMA</th>
-                    <th>NO HP</th>
-                    <th>DESA</th>
-                    <th>KECAMATAN</th>
-                    <th width="250">Aksi</th>
-                </tr>
-            </thead>
-        </table>
+    <div class="card">
+        <div class="card-header p-3 d-flex mb-4">
+            <h5 class="align-self-center m-0">List Data Penduduk</h5>
+
+            <button class="create-new btn btn-primary btn-m ms-auto btn-toggle-sidebar" data-bs-toggle="offcanvas" data-bs-target="#add-resident-name"" aria-controls=" add-resident-name">
+                <i class="ti ti-plus me-1"></i>
+                <span class="align-middle">&NonBreakingSpace;Tambah Penduduk</span>
+            </button>
+            <a href="{{route('exportToExcel')}}" class="btn btn-success btn-m ms-2" download><i class="ti ti-download" style="font-size: 16px;"></i>&NonBreakingSpace;Export</a>
+        </div>
+        <div class="card-datatable table-responsive pt-0">
+            <table class="datatables-basic table" id="get-population">
+                <thead>
+                    <tr>
+                        <th width="50" align="center">NO</th>
+                        <th>NIK</th>
+                        <th>NAMA</th>
+                        <th>JENIS KELAMIN</th>
+                        <th>NO HP</th>
+                        <th>DESA</th>
+                        <th>KECAMATAN</th>
+                        <th>ALAMAT</th>
+                        <th>PENANGGUNG JAWAB</th>
+                        <th>KETERANGAN</th>
+                        <th width="180">Aksi</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
 @include('admin.add_population')
@@ -34,6 +68,23 @@ List Data
 @include('admin.detail_population')
 @endsection
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var maleCount = {{$chart_data[0]['man'] }};
+    var femaleCount = {{$chart_data[0]['woman']}};
+
+    var ctx = document.getElementById('genderChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Male', 'Female'],
+            datasets: [{
+                data: [maleCount, femaleCount],
+                backgroundColor: ['#3498db', '#ff7979'], // Set colors for Male and Female segments
+            }]
+        }
+    });
+</script>
 @include('admin.datatable')
 @include('admin.select_dropdown')
 @include('admin.store_population')
