@@ -88,16 +88,18 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-        $validator = Validator::make($request->all(), [
-            'photo_id' => 'image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failed',
-                'code' => 1001,
-                'message' => 'Please check your image upload.'
-            ], 422);
+        if($request->photo_id){
+            $validator = Validator::make($request->all(), [
+                'photo_id' => 'image|mimes:jpeg,png,jpg|max:1024',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'code' => 1001,
+                    'message' => 'Please check your image upload.'
+                ], 422);
+            }
         }
         try {
             if(!$request->nik 
@@ -191,16 +193,18 @@ class DashboardController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'e_photo_id' => 'image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failed',
-                'code' => 1001,
-                'message' => 'Please check your image upload.'
-            ], 422);
+        if($request->e_photo_id){
+            $validator = Validator::make($request->all(), [
+                'e_photo_id' => 'image|mimes:jpeg,png,jpg|max:1024',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'code' => 1001,
+                    'message' => 'Please check your image upload.'
+                ], 422);
+            }
         }
 
         $population_data = PopulationData::find($id);
