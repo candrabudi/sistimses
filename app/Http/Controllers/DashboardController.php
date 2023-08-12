@@ -88,7 +88,7 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-        if($request->photo_id){
+        if($request->photo_id != "undefined"){
             $validator = Validator::make($request->all(), [
                 'photo_id' => 'image|mimes:jpeg,png,jpg|max:1024',
             ]);
@@ -193,7 +193,7 @@ class DashboardController extends Controller
 
     public function update(Request $request, $id)
     {
-        if($request->e_photo_id){
+        if($request->e_photo_id != "undefined"){
             $validator = Validator::make($request->all(), [
                 'e_photo_id' => 'image|mimes:jpeg,png,jpg|max:1024',
             ]);
