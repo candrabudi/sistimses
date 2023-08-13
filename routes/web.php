@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PersonResponsibleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,15 @@ Route::controller(DashboardController::class)->group(function() {
     Route::get('/district', 'getDistrict')->name('getDistrict');
     Route::get('/exportToExcel', 'exportToExcel')->name('exportToExcel');
     Route::get('/sub-district', 'getSubDistrict')->name('getSubDistrict');
+   
+});
+Route::controller(PersonResponsibleController::class)->group(function() {
+    Route::get('/person-responsible', 'index')->name('person-responsible');
+    Route::get('/person-responsible/datatable', 'datatable')->name('person-responsible.datatable');
+    Route::post('/person-responsible/store', 'store')->name('person-responsible.store');
+    Route::get('/person-responsible/edit/{id}', 'edit')->name('person-responsible.edit');
+    Route::post('/person-responsible/update/{id}', 'update')->name('person-responsible.update');
+    Route::delete('/person-responsible/delete/{id}', 'delete')->name('person-responsible.delete');
    
 });
 Route::controller(AuthController::class)->group(function() {

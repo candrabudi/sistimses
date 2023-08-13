@@ -1,29 +1,15 @@
-<div class="offcanvas offcanvas-end" id="add-resident-name" style="width: 30%;">
+<div class="offcanvas offcanvas-end" id="add-person-responsible" style="width: 30%;">
     <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title" id="exampleModalLabel">Tambah Penduduk</h5>
+        <h5 class="offcanvas-title" id="exampleModalLabel">Tambah Penanggung Jawab</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body flex-grow-1">
-        <form class="add-resident-name pt-0 row g-2" id="form-add-resident-name" onsubmit="return false">
-            <div class="col-sm-12">
-                <label class="form-label" for="nik">NIK</label>
-                <div class="input-group input-group-merge">
-                    <input type="number" id="nik" class="form-control dt-full-name" name="nik" placeholder="" aria-label="" aria-describedby="basicFullname2" required />
-                </div>
-            </div>
+        <form class="add-person-responsible pt-0 row g-2" id="form-add-person-responsible" onsubmit="return false">
             <div class="col-sm-12">
                 <label class="form-label" for="name">NAMA</label>
                 <div class="input-group input-group-merge">
                     <input type="text" id="name" name="name" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required />
                 </div>
-            </div>
-            <div class="col-sm-12">
-                <label class="form-label" for="gender">JENIS KELAMIN</label>
-                <select class="form-select" id="gender" name="gender" required>
-                    <option value="">PILIH GENDER</option>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select>
             </div>
             <div class="col-sm-12">
                 <label class="form-label" for="phone_number">NO HP</label>
@@ -58,31 +44,6 @@
                 <label class="form-label" for="address">ALAMAT</label>
                 <div class="input-group input-group-merge">
                     <textarea name="address" class="form-control" id="address" cols="30" rows="3" required></textarea>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <label class="form-label" for="person_responsible">PENANGGUNG JAWAB</label>
-                <div class="input-group">
-                    <div class="col-12">
-                        <select id="person_responsible" name="person_responsible" class="select2 form-select form-select-lg" data-allow-clear="false">
-                            <option value="">PILIH PENANGGUNG JAWAB</option>
-                            @foreach($person_responsible as $pd)
-                                <option value="{{$pd->id}}">{{$pd->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <label class="form-label" for="information">KETERANGAN</label>
-                <div class="input-group input-group-merge">
-                    <textarea name="information" class="form-control" id="information" cols="30" rows="3" required></textarea>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <label class="form-label" for="photo_id">FOTO KTP</label>
-                <div class="input-group input-group-merge">
-                    <input type="file" id="photo_id" name="photo_id" accept=".jpg, .jpeg, .png, .webp" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="photo_id" />
                 </div>
             </div>
             <div class="col-sm-12">

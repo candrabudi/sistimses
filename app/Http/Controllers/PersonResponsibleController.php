@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\District;
+use App\Models\PersonResponsible;
 use App\Models\PopulationData;
-use App\Models\ResidentName;
 use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
 use DataTables;
-use App\Exports\PopulationDataExport;
-use App\Models\PersonResponsible;
-use Maatwebsite\Excel\Facades\Excel;
-use Validator;
-class DashboardController extends Controller
+
+class PersonResponsibleController extends Controller
 {
     public function index()
     {
@@ -27,19 +24,12 @@ class DashboardController extends Controller
             ->where('city_id', 17)
             ->where('province_id', 33)
             ->get();
-        $person_responsible = PersonResponsible::all();
-        $chart_data = PopulationData::select(DB::raw("SUM(CASE WHEN gender = 'Laki-laki' THEN 1 ELSE 0 END) AS man,
-        SUM(CASE WHEN gender != 'Laki-laki' THEN 1 ELSE 0 END) AS woman"))
-            ->get()
-            ->toArray();
-        return view('admin.dashboard', compact('districts', 'role', 'chart_data', 'person_responsible'));
+        return view('admin.person_responsible.index',compact('districts', 'role'));
     }
 
     public function datatable()
     {
-        $fetch = PopulationData::join('person_responsibles as pd', 'pd.id', '=', 'population_data.person_responsible_id')
-            ->select('population_data.*', 'pd.name as person_responsible')
-            ->get()
+        $fetch = PersonResponsible::get()
             ->toArray();
 
         $i = 0;
@@ -48,92 +38,41 @@ class DashboardController extends Controller
             return [
                 'no' => $i . '.',
                 'id' => $new['id'],
-                'nik' => $new['nik'],
                 'name' => $new['name'],
-                'gender' => $new['gender'],
                 'phone_number' => $new['phone_number'],
                 'district' => $new['district'],
                 'sub_district' => $new['sub_district'],
                 'address' => $new['address'],
-                'person_responsible' => $new['person_responsible'],
-                'information' => $new['information'],
             ];
         }, $fetch);
 
         return DataTables::of($reform)->make(true);
     }
 
-    public function getDistrict()
-    {
-        $districts = District::select('id', 'city_id', 'district_id')
-            ->whereIn('districts.id', [2975, 2972])
-            ->get();
-        return $districts;
-    }
-
-    public function getSubDistrict(Request $request)
-    {
-        try {
-
-            $district_city_id = explode(',', $request->district_city_id);
-            $province_id = $district_city_id[0];
-            $district_id = $district_city_id[1];
-            $city_id = $district_city_id[2];
-            $subdistrict = SubDistrict::where('district_id', $district_id)
-                ->where('city_id', $city_id)
-                ->where('province_id', $province_id)
-                ->get();
-            return $subdistrict;
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
     public function store(Request $request)
     {
         DB::beginTransaction();
-        if($request->photo_id != "undefined"){
-            $validator = Validator::make($request->all(), [
-                'photo_id' => 'image|mimes:jpeg,png,jpg|max:1024',
-            ]);
-        
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 'failed',
-                    'code' => 1001,
-                    'message' => 'Please check your image upload.'
-                ], 422);
-            }
-        }
         try {
-            if(!$request->nik 
-                || !$request->name 
+            if(!$request->name 
                 || !$request->address 
                 || !$request->phone_number 
                 || !$request->district
                 || !$request->sub_district
-                || !$request->person_responsible
-                || !$request->information
-                || !$request->gender){
+                ){
                     return response()->json([
                         'status' => 'failed', 
                         'code' => 422, 
                         'message' => 'Please Check Your Request!'
                     ], 422);
             }
-            $check_nik = PopulationData::where('nik', $request->nik)
+            $check_nik = PersonResponsible::where('name', $request->name)
                 ->first();
             if($check_nik){
                 return response()->json([
                     'status' => 'failed', 
                     'code' => 400, 
-                    'message' => 'Duplicate Data NIK!'
+                    'message' => 'Duplicate Data Name!'
                 ], 400);
-            }
-            if ($request->hasFile('photo_id')) {
-                $image = $request->file('photo_id');
-                $imageName = 'photo_id/photo_id_' . time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('upload_images/photo_id'), $imageName);
             }
 
             $district_id = explode(',', $request->district);
@@ -146,17 +85,13 @@ class DashboardController extends Controller
             $subdistrict = SubDistrict::where('id', $request->sub_district)
                 ->select('subdistrict_name')
                 ->first();
-            $store = new PopulationData();
-            $store->nik = $request->nik;
+
+            $store = new PersonResponsible();
             $store->name = $request->name;
-            $store->gender = $request->gender;
             $store->address = $request->address;
             $store->phone_number = $request->phone_number;
             $store->district = $district->district_name;
             $store->sub_district = $subdistrict->subdistrict_name;
-            $store->person_responsible_id = $request->person_responsible;
-            $store->information = $request->information;
-            $store->photo_id = $imageName ?? '';
             $store->save();
 
             DB::commit();
@@ -178,9 +113,7 @@ class DashboardController extends Controller
     public function edit($id)
     {
         $datas = [];
-        $population_data = PopulationData::join('person_responsibles as pd', 'pd.id', '=', 'population_data.person_responsible_id')
-            ->select('population_data.*', 'pd.name as person_responsible')
-            ->where('population_data.id', $id)
+        $population_data = PersonResponsible::where('id', $id)
             ->first();
         $district = District::where('district_name', $population_data->district)
             ->where('city_id', 17)
@@ -199,35 +132,14 @@ class DashboardController extends Controller
 
     public function update(Request $request, $id)
     {
-        if($request->e_photo_id != "undefined"){
-            $validator = Validator::make($request->all(), [
-                'e_photo_id' => 'image|mimes:jpeg,png,jpg|max:1024',
-            ]);
-        
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 'failed',
-                    'code' => 1001,
-                    'message' => 'Please check your image upload.'
-                ], 422);
-            }
-        }
 
-        $population_data = PopulationData::find($id);
+        $population_data = PersonResponsible::find($id);
         if (!$population_data) {
             return response()->json([
                 'status' => 'failed',
                 'code' => 404,
                 'message' => 'No Data Found.'
             ], 404);
-        }
-
-        if ($request->hasFile('e_photo_id')) {
-            $image = $request->file('e_photo_id');
-            $image_name = 'photo_id/photo_id_' . time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('upload_images/photo_id'), $image_name);
-        } else {
-            $image_name = null;
         }
         $district_id = explode(',', $request->e_district);
         $district = District::where('district_id', $district_id[0])
@@ -240,32 +152,41 @@ class DashboardController extends Controller
             ->select('subdistrict_name')
             ->first();
         $population_data->update([
-            'nik' => $request->input('e_nik', $population_data->nik),
             'name' => $request->input('e_name', $population_data->name),
             'phone_number' => $request->input('e_phone_number', $population_data->phone_number),
             'address' => $request->input('e_address', $population_data->address),
             'district' => $district->district_name ?? $population_data->district,
             'sub_district' => $subdistrict->subdistrict_name ?? $population_data->sub_district,
-            'person_responsible_id' => $request->input('e_person_responsible', $population_data->person_responsible_id),
-            'information' => $request->input('e_information', $population_data->information),
-            'photo_id' => $image_name ?? $population_data->photo_id,
         ]);
 
         return response()->json([
             'status'    => 'success',
             'code'  => 200,
-            'message'   => 'Success Update Population Data'
+            'message'   => 'Success Update Person Responsible Data'
         ], 200);
-    }
-
-    public function exportToExcel()
-    {
-        return Excel::download(new PopulationDataExport, 'filename.xlsx');
     }
 
     public function delete($id)
     {
-        PopulationData::where('id', $id)->delete();
+        $check = PersonResponsible::find($id);
+        if(!$check){
+            return response()->json([
+                'status' => 'failed',
+                'code' => 404,
+                'message' => 'No Data Found.'
+            ], 404);
+        }
+
+        $check_population_data = PopulationData::where('person_responsible_id', $check->id)
+            ->first();
+        if($check_population_data){
+            return response()->json([
+                'status' => 'failed',
+                'code' => 400,
+                'message' => 'Can`t Delet Data.'
+            ], 400);
+        }
+        PersonResponsible::where('id', $id)->delete();
 
         return response()->json([
             'status' => 'success',

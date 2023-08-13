@@ -46,6 +46,10 @@
                             <span class="fw-medium me-1 fw-bold">Keterangan:</span>
                             <span id="p_information"></span>
                         </li>
+                        <li class="mb-2 pt-1">
+                            <span class="fw-medium me-1 fw-bold">Penanggung Jawab:</span>
+                            <span id="p_person_responsible"></span>
+                        </li>
                     </ul>
                 </div>
             </div>
