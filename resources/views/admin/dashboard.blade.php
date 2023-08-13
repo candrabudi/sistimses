@@ -86,8 +86,8 @@ List Data
                         <th>NAMA</th>
                         <th>JENIS KELAMIN</th>
                         <th>NO HP</th>
-                        <th>DESA</th>
                         <th>KECAMATAN</th>
+                        <th>DESA</th>
                         <th>ALAMAT</th>
                         <th>PENANGGUNG JAWAB</th>
                         <th>KETERANGAN</th>
