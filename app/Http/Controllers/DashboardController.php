@@ -121,13 +121,15 @@ class DashboardController extends Controller
                         'message' => 'Please Check Your Request!'
                     ], 422);
             }
-            $check_nik = PopulationData::where('nik', $request->nik)
+            $check_nik = PopulationData::join('person_responsibles as pd', 'pd.id', '=', 'population_data.person_responsible_id')
+                ->select('population_data.*', 'pd.name as person_responsible')
+                ->where('nik', $request->nik)
                 ->first();
             if($check_nik){
                 return response()->json([
                     'status' => 'failed', 
                     'code' => 400, 
-                    'message' => 'Duplicate Data NIK!'
+                    'message' => 'Maaf NIK sudah diinput oleh '.$check_nik->person_responsible
                 ], 400);
             }
             if ($request->hasFile('photo_id')) {
@@ -220,6 +222,20 @@ class DashboardController extends Controller
                 'code' => 404,
                 'message' => 'No Data Found.'
             ], 404);
+        }
+
+        $check_nik = PopulationData::join('person_responsibles as pd', 'pd.id', '=', 'population_data.person_responsible_id')
+                ->select('population_data.*', 'pd.name as person_responsible')
+                ->where('nik', $request->e_nik)
+                ->first();
+        if($check_nik){
+            if($check_nik->id != $id){
+                return response()->json([
+                    'status' => 'failed', 
+                    'code' => 400, 
+                    'message' => 'Maaf NIK sudah diinput oleh '.$check_nik->person_responsible
+                ], 400);
+            }
         }
 
         if ($request->hasFile('e_photo_id')) {

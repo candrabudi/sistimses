@@ -79,7 +79,7 @@
                                 if (xhr.responseJSON.code == 400) {
                                     Swal.fire({
                                         title: 'Error!',
-                                        text: 'Maaf Data tidak Valid!',
+                                        text: xhr.responseJSON.message,
                                         icon: 'error',
                                         customClass: {
                                             confirmButton: 'btn btn-primary'
