@@ -3,7 +3,7 @@
         $('#submit-data').click(function() {
             Swal.fire({
                 title: 'Yakin?',
-                text: "Kamu akan menambahkan kategori",
+                text: "Kamu akan menambahkan data",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Ya',
