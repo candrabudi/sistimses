@@ -14,7 +14,7 @@
             <div class="col-sm-12">
                 <label class="form-label" for="phone_number">NO HP</label>
                 <div class="input-group input-group-merge">
-                    <input type="number" id="phone_number" name="phone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" required />
+                    <input type="number" id="phone_number" name="phone_number" class="form-control dt-post" placeholder="" aria-label="" aria-describedby="basicPost2" />
                 </div>
             </div>
             <div class="col-sm-12">

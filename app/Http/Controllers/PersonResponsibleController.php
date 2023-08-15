@@ -55,7 +55,6 @@ class PersonResponsibleController extends Controller
         try {
             if(!$request->name 
                 || !$request->address 
-                || !$request->phone_number 
                 || !$request->district
                 || !$request->sub_district
                 ){
@@ -89,7 +88,7 @@ class PersonResponsibleController extends Controller
             $store = new PersonResponsible();
             $store->name = $request->name;
             $store->address = $request->address;
-            $store->phone_number = $request->phone_number;
+            $store->phone_number = $request->phone_number ?? "-";
             $store->district = $district->district_name;
             $store->sub_district = $subdistrict->subdistrict_name;
             $store->save();
